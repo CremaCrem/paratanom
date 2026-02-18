@@ -382,6 +382,70 @@ document.querySelectorAll('.gallery-placeholder').forEach(item => {
   });
 });
 
+// ===== Diagram Lightbox (System Diagrams) =====
+const diagramModal = document.getElementById('diagram-modal');
+const diagramModalImg = document.getElementById('diagram-modal-img');
+const diagramModalCaption = document.getElementById('diagram-modal-caption');
+const diagramModalClose = document.getElementById('diagram-modal-close');
+const diagramTriggers = document.querySelectorAll('.diagram-trigger');
+
+function openDiagramModal(src, caption) {
+  if (!diagramModal || !diagramModalImg) return;
+  diagramModalImg.src = src;
+  diagramModalImg.alt = caption || '';
+  if (diagramModalCaption) {
+    diagramModalCaption.textContent = caption || '';
+  }
+  diagramModal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDiagramModal() {
+  if (!diagramModal || !diagramModalImg) return;
+  diagramModal.classList.add('hidden');
+  diagramModalImg.src = '';
+  document.body.style.overflow = '';
+}
+
+diagramTriggers.forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const imgSrc = trigger.getAttribute('data-diagram-img');
+    const caption = trigger.getAttribute('data-diagram-caption') || '';
+    if (imgSrc) {
+      openDiagramModal(imgSrc, caption);
+    }
+  });
+
+  trigger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const imgSrc = trigger.getAttribute('data-diagram-img');
+      const caption = trigger.getAttribute('data-diagram-caption') || '';
+      if (imgSrc) {
+        openDiagramModal(imgSrc, caption);
+      }
+    }
+  });
+});
+
+if (diagramModalClose) {
+  diagramModalClose.addEventListener('click', closeDiagramModal);
+}
+
+if (diagramModal) {
+  diagramModal.addEventListener('click', (e) => {
+    if (e.target === diagramModal) {
+      closeDiagramModal();
+    }
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && diagramModal && !diagramModal.classList.contains('hidden')) {
+    closeDiagramModal();
+  }
+});
+
 // ===== Easter Egg: Konami Code =====
 let konamiCode = [];
 const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
