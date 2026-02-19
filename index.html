@@ -427,7 +427,7 @@
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.4);
-        z-index: 49;
+        z-index: 55;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;
@@ -564,6 +564,78 @@
         transform: scale(1.05);
       }
 
+      /* ===== Video showcase: retro CRT monitor ===== */
+      .crt-monitor {
+        position: relative;
+        background: #1a1a2e;
+        border: 6px solid #2d2d44;
+        border-radius: 12px;
+        box-shadow:
+          0 0 30px rgba(234, 118, 5, 0.15),
+          0 0 60px rgba(70, 166, 17, 0.08),
+          inset 0 0 40px rgba(0, 0, 0, 0.5);
+      }
+      .crt-monitor::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 6px;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.06) 2px,
+          rgba(0, 0, 0, 0.06) 4px
+        );
+        pointer-events: none;
+        z-index: 2;
+      }
+      .crt-bezel {
+        border: 3px solid #3a3a55;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+      }
+      .crt-led {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        animation: ledBlink 3s ease-in-out infinite;
+      }
+      @keyframes ledBlink {
+        0%, 90%, 100% { opacity: 1; }
+        95% { opacity: 0.3; }
+      }
+      .video-section-stars {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .video-section-stars span {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle var(--dur) ease-in-out infinite;
+      }
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.15; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(1.4); }
+      }
+      @media (max-width: 640px) {
+        .crt-monitor {
+          border-width: 4px;
+          border-radius: 8px;
+          box-shadow:
+            0 0 15px rgba(234, 118, 5, 0.12),
+            inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .crt-bezel {
+          border-width: 2px;
+          border-radius: 6px;
+        }
+      }
+
       /* ===== Diagram modal / triggers ===== */
       .diagram-trigger {
         cursor: pointer;
@@ -693,51 +765,52 @@
         </div>
       </div>
 
-      <!-- Mobile Menu Panel -->
-      <div
-        id="mobile-menu"
-        class="mobile-menu fixed top-0 right-0 w-64 sm:w-72 h-full bg-white shadow-2xl z-50 p-6 sm:p-8 flex flex-col gap-5"
-      >
-        <button
-          id="mobile-menu-close"
-          class="self-end text-3xl text-pt-blue hover:text-pt-orange leading-none"
-          aria-label="Close menu"
-        >
-          &times;
-        </button>
-        <a
-          href="#about"
-          class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
-          >About</a
-        >
-        <a
-          href="#features"
-          class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
-          >Features</a
-        >
-        <a
-          href="#gallery"
-          class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
-          >Gallery</a
-        >
-        <a
-          href="#results"
-          class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
-          >Results</a
-        >
-        <a
-          href="#team"
-          class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
-          >Team</a
-        >
-        <a
-          href="#download"
-          class="pixel-btn pixel-btn-green text-center py-3 px-6 mobile-nav-link mt-2"
-          style="font-size: 0.55rem"
-          >DOWNLOAD</a
-        >
-      </div>
     </nav>
+
+    <!-- Mobile Menu Panel (outside nav to avoid stacking-context issues) -->
+    <div
+      id="mobile-menu"
+      class="mobile-menu fixed top-0 right-0 w-64 sm:w-72 h-full bg-white shadow-2xl z-[60] p-6 sm:p-8 flex flex-col gap-5"
+    >
+      <button
+        id="mobile-menu-close"
+        class="self-end text-3xl text-pt-blue hover:text-pt-orange leading-none"
+        aria-label="Close menu"
+      >
+        &times;
+      </button>
+      <a
+        href="#about"
+        class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
+        >About</a
+      >
+      <a
+        href="#features"
+        class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
+        >Features</a
+      >
+      <a
+        href="#gallery"
+        class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
+        >Gallery</a
+      >
+      <a
+        href="#results"
+        class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
+        >Results</a
+      >
+      <a
+        href="#team"
+        class="font-pixel text-[0.55rem] text-gray-700 hover:text-pt-orange transition-colors py-2 mobile-nav-link"
+        >Team</a
+      >
+      <a
+        href="#download"
+        class="pixel-btn pixel-btn-green text-center py-3 px-6 mobile-nav-link mt-2"
+        style="font-size: 0.55rem"
+        >DOWNLOAD</a
+      >
+    </div>
 
     <!-- ===== HERO SECTION ===== -->
     <section
@@ -1630,6 +1703,151 @@
             </p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== VIDEO DEMO SECTION ===== -->
+    <section
+      id="demo"
+      class="py-16 sm:py-24 md:py-32 relative overflow-hidden"
+      style="
+        background: radial-gradient(
+            ellipse at 20% 50%,
+            rgba(0, 74, 173, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 50%,
+            rgba(70, 166, 17, 0.1) 0%,
+            transparent 50%
+          ),
+          linear-gradient(180deg, #0a0a1a 0%, #111128 40%, #0e0e20 100%);
+      "
+    >
+      <!-- Star field -->
+      <div class="video-section-stars" aria-hidden="true">
+        <span style="width:2px;height:2px;top:8%;left:12%;--dur:3s"></span>
+        <span style="width:3px;height:3px;top:15%;left:45%;--dur:4.5s"></span>
+        <span style="width:2px;height:2px;top:22%;left:78%;--dur:2.8s"></span>
+        <span style="width:2px;height:2px;top:35%;left:25%;--dur:5s"></span>
+        <span style="width:3px;height:3px;top:42%;left:62%;--dur:3.5s"></span>
+        <span style="width:2px;height:2px;top:55%;left:88%;--dur:4s"></span>
+        <span style="width:2px;height:2px;top:65%;left:8%;--dur:3.2s"></span>
+        <span style="width:3px;height:3px;top:72%;left:52%;--dur:5.5s"></span>
+        <span style="width:2px;height:2px;top:80%;left:35%;--dur:2.5s"></span>
+        <span style="width:2px;height:2px;top:88%;left:70%;--dur:4.2s"></span>
+        <span style="width:3px;height:3px;top:10%;left:92%;--dur:3.8s"></span>
+        <span style="width:2px;height:2px;top:50%;left:5%;--dur:4.8s"></span>
+      </div>
+
+      <div
+        class="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10"
+      >
+        <!-- Section header -->
+        <div class="text-center mb-10 sm:mb-14 md:mb-16">
+          <span
+            data-aos="fade-up"
+            class="font-pixel text-[0.4rem] sm:text-[0.5rem] text-pt-green tracking-widest uppercase mb-3 block"
+            >Live Preview</span
+          >
+          <h2
+            data-aos="fade-up"
+            data-aos-delay="100"
+            class="font-pixel text-xl sm:text-2xl md:text-3xl text-pt-orange mb-3 section-title-underline"
+            style="
+              text-shadow:
+                0 0 20px rgba(234, 118, 5, 0.4),
+                3px 3px 0 #004aad;
+            "
+          >
+            SEE IT IN ACTION
+          </h2>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="200"
+            class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto"
+          >
+            Watch a full walkthrough of Paratanom &mdash; from AR crop scanning
+            to cozy farming gameplay.
+          </p>
+        </div>
+
+        <!-- CRT Monitor frame -->
+        <div data-aos="zoom-in" data-aos-delay="100">
+          <div class="crt-monitor p-3 sm:p-4 md:p-5">
+            <!-- Monitor top bar -->
+            <div
+              class="flex items-center justify-between mb-2 sm:mb-3 px-1 sm:px-2"
+            >
+              <div class="flex items-center gap-2 sm:gap-3">
+                <div class="crt-led bg-pt-green"></div>
+                <span
+                  class="font-pixel text-[0.3rem] sm:text-[0.4rem] text-gray-500 tracking-widest"
+                  >PARATANOM // DEMO REEL</span
+                >
+              </div>
+              <div class="flex gap-1.5">
+                <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gray-600"></div>
+                <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gray-600"></div>
+                <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gray-600"></div>
+              </div>
+            </div>
+
+            <!-- Video bezel -->
+            <div class="crt-bezel">
+              <video
+                id="demo-video"
+                class="w-full aspect-video bg-black"
+                controls
+                preload="metadata"
+                poster=""
+              >
+                <source src="assets/videos/Paratanom Video Demonstration.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <!-- Monitor bottom bar -->
+            <div
+              class="flex items-center justify-between mt-2 sm:mt-3 px-1 sm:px-2"
+            >
+              <span
+                class="font-pixel text-[0.25rem] sm:text-[0.35rem] text-gray-600 tracking-wider"
+                >MODEL: PT-2025 &bull; TEAM APPL</span
+              >
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <span
+                  class="font-pixel text-[0.25rem] sm:text-[0.35rem] text-pt-orange"
+                  >REC</span
+                >
+                <div
+                  class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pt-orange rounded-full animate-pulse"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monitor stand -->
+          <div class="flex justify-center" aria-hidden="true">
+            <div
+              class="w-16 sm:w-20 h-4 sm:h-5 bg-gradient-to-b from-[#2d2d44] to-[#1a1a2e] rounded-b-lg"
+            ></div>
+          </div>
+          <div class="flex justify-center" aria-hidden="true">
+            <div
+              class="w-28 sm:w-36 h-2 sm:h-2.5 bg-gradient-to-b from-[#2d2d44] to-[#3a3a55] rounded-b-md"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Tagline -->
+        <p
+          data-aos="fade-up"
+          data-aos-delay="300"
+          class="text-center mt-8 sm:mt-10 font-pixel text-[0.35rem] sm:text-[0.45rem] text-gray-500 tracking-widest"
+        >
+          &gt; WATCH THE FULL WALKTHROUGH ABOVE &lt;
+        </p>
       </div>
     </section>
 
